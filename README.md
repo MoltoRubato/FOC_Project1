@@ -13,8 +13,8 @@ This repository contains solutions to four data science questions focused on tim
 - Python  
 
 ### Contributors
-Ryan Huang
-University Of Melbourne COMP10001 Teaching Team (Question Provider)
+- Ryan Huang
+- University Of Melbourne COMP10001 Teaching Team (Question Provider)
 
 ## How to Run
 Clone the repository and run the Python scripts for each question:
