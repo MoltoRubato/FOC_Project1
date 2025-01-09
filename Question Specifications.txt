@@ -1,0 +1,127 @@
+Inspiration - Wastewater Management
+Imagine that you work for a company (Leckie Treatment Enterprises – LTE) that treats wastewater from multiple factories.
+
+Each factory has a tank where they store their wastewater.
+
+When the tank in a factory reaches a certain capacity limit, then the wastewater contents of the tank is pumped out, and the contents of the tank then flow via pipes to a central wastewater treatment plant.
+
+There are many factories that are connected to the wastewater treatment plant.
+Each factory has its own storage tank with its own pump, and is connected to the wastewater treatment plant via a pipe.
+
+Every hour, we can measure the volume of wastewater that flows from a factory into its tank.
+We can represent the sequence of hourly volumes as a list of integers, where there is one integer for each hour, and each integer represents the volume of wastewater that flows in that hour from the factory to the tank.
+For example, the list [4, 0, 3] represents the hourly volume of wastewater (in arbitrary units) for three hours: 4 units of volume in the first hour, 0 units of volume in the second hour, and 3 units of volume in the third hour.
+In statistics and data science, this type of sequence of values that are ordered by time is known as a time series.
+Consider the factory below. Wastewater from the factory becomes the inflow to the storage tank. Once the amount of wastewater in the tank reaches a threshold, the pump activates to empty the tank. The output from the pump is called the outflow.
+
+--- 
+Question 1: Operating a Pump (3 marks)
+Consider the factory below. Wastewater from the factory becomes the inflow to the storage tank. Once the amount of wastewater in the tank reaches a threshold, the pump activates to empty the tank. The output from the pump is called the outflow.
+
+At every hourly time step, an inflow arrives at the tank and is added to the current contents of the tank (i.e., the wastewater remaining from the previous hour).
+You can always assume that the tank is initially empty at the start of the time series of inflows.
+If the combined volume of the current contents of the tank plus the new inflow in the current hour reaches or exceeds the tank capacity, then the pump will operate to instantaneously remove the wastewater in the tank.
+Each time the pump operates, the amount of wastewater removed is equal to the volume of the tank. It repeats this operation multiple times if necessary, For example, if the current contents is 4 units, the tank capacity is 5 units, and the inflow is 8 units, then the pump will operate twice to create an outflow of 2 x 5 = 10 units, leaving the remaining 2 units in the tank.
+
+Scenario 1
+Consider the following example, where the tank capacity is 5, and it is initially empty. The time series of hourly inflows is [3,4,7].
+The number of times the pump operates each hour is [0, 1, 1].
+
+Scenario 2
+What if the tank capacity is 2, and the time series of hourly inflows is [3, 4, 7]?
+The number of times the pump operates each hour is [1, 2, 4].
+
+Scenario 3
+What if the tank capacity is 3, and the time series of hourly inflows is [2, 0, 2, 0]?
+The number of times the pump operates each hour is [0, 0, 1, 0].
+
+Write a function so that given the capacity of the tank and the hourly inflows, will return the number of times the pump is operated at each hour: pump_operations_lte(capacity, inflows)
+
+capacity: the capacity of the tank as an integer greater than zero.
+inflows: a list of integers corresponding to the hourly inflows, where the list has a length greater than zero, and each integer is greater than or equal to zero.
+Returns a list of the number of times the pump was operated each hour. Note that the length of the returned list should be the same as the length of inflows.
+
+Assumptions:
+You can assume that the tank is initially empty before the inflows arrive.
+
+--- 
+
+Question 2: Flow Volatility (3 marks)
+The wastewater treatment plant uses a complex series of chemical processes to remove unwanted compounds from the water.
+Ideally, the treatment plant runs at maximum efficiency when the volume of the inflow to the plant is a fixed constant at each time step.
+The more volatile the inflow (i.e., the greater the variation in inflow volume), the less efficient is the plant, as it has to cater for the peak flow.
+
+How can we measure the volatility of a time series?
+
+Consider the following time series:
+[8, 6, 9, 9, 15, 12, 11, 10]
+
+This time series goes through a series of locally maximum and minimum values, e.g., it starts at 8, decreases to a minimum of 6, then increases to a maximum of 15, and then decreases to a minimum of 10.
+The biggest difference in value between two successive maximum and minimum values in the sequence is from 6 to 15, i.e., an absolute difference of 9.
+We define the volatility of a given time series as the absolute value of the biggest difference between two successive maximum and minimum values.
+For example, the following time series have their volatility as shown:
+
+Note that volatility is defined to be greater than or equal to zero.
+
+You need to write a function that returns the volatility of a given time series of levels: volatility_lte(levels)
+
+levels: a time series of flow levels, represented as a list of non-negative integer values (i.e., each value in levels is ≥ 0). Note that the list will contain at least two values.
+
+Returns the absolute value of the biggest difference between two successive maximum and minimum values in levels.
+
+---
+
+Question 3: Next Flow Prediction (4 marks)
+
+To optimise the operation of the treatment plant, it is important to predict what the next flow value is likely to be, so that adjustments can be made to balance the flows.
+One simple way to make a prediction of the next value in a time series of n values is to compare that time series to a collection of other time series that have been observed in the past. We can pick to past time series that is most similar to the current time series. Then we use the next value in the most similar past time series as our prediction for the next value in the current time series.
+
+Consider the current time series [8, 7, 5], where we want to predict the next value in the time series.
+We are given the following past time series to learn from, where each past time series has one more value than the current time series.
+[3, 6, 1, 7]     [7, 6, 5, 4]     [2, 2, 2, 2]
+We want to choose the past time series whose first three values are most similar to the current time series. Then we can use the last value of the chosen past time series as our prediction for the next value of the current time series.
+
+How do we decide which is the most similar time series to the current time series?
+Compute the sum of the absolute differences between the values of each time series. A lower sum means greater similarity. If the current time series is [8, 7, 5],
+
+So time series [7, 6, 5, 4] is most similar to [8, 7, 5], and we use the next value of that time series, i.e., 4, as our predicted value for the current time series.
+
+You need to write a function that returns the predicted value in the current time series based on the given list of previous time series: predict_lte(current, past)
+
+current: a list of non-negative integer values representing the current time series. Note that the list will have at least one value.
+
+past: a list of past time series, where each time series is a list of non-negative integer values, and the length of each time series is one greater than the length of the current time series.
+
+Returns the last value of the time series in past that is most similar to the time series in current.
+Note that if multiple time series in past are equally similar to current, then pick the one that appears first in past.
+
+--- 
+
+Question 4: Load Balancing (5 marks)
+So far we can compute the inflows to the treatment plant (based on the pump operations), measure their volatility and predict the flow in the next hour.
+Our aim in this question is to look at how we can balance the load at the treatment plant by delaying the inflows from one factory (e.g., by using a temporary holding tank).
+
+Consider the following two time series of flows arriving at the treatment plant at the same time:
+f1 = [7, 2, 5]       f2 = [4, 3, 9]
+If these two flows are processed at the same time, then the combined load on the plant each hour is the sum of the flows at each hour in these two time series: [11, 5, 14]
+In this question, we will use a simple method to calculate the volatility of the load at the plant by computing the difference between the maximum and minimum hourly values in the combined time series: volatility = 14 – 5 = 9
+
+Suppose we have the option to store one of the flows in a holding tank, so that the flow can be delayed to smooth out the volatility of the combined load. If each time series in n hours long, we will assume that we have the options of delaying either one of the two incoming time series by 1 hour, or 2 hours, …or n-1 hours.
+
+In this example, n = 3, so we have the following options: delay flow 1 by 1 hour, delay flow 1 by 2 hours, delay flow 2 by 1 hour, or delay flow 2 by 2 hours.
+We can then compute the combined load for each of these options, and compute the volatility of for each of these combined load options.
+
+Let’s compute each of these options. 
+
+Assumptions:
+
+The two input flows are the same length.
+If a flow is delayed 1 hour, then we add a 0 to the start of that flow, and add a 0 to the end of the other flow.
+In general, if a flow is delayed k hours, we add k zeroes to the start of that flow, and add k zeroes to the end of the other flow. We’ll call this “padding by zero”.
+If each input flow is of length n hours, then the maximum delay we will consider is n - 1 hours. In our example, n = 3. So the maximum delay is 3 – 1 = 2 hours.
+If the input flows are of length n, then the total number of options we need to consider is 2 x (n – 1) + 1
+In this question you need to write a function that returns the volatility of the best load balance that can be obtained for the two given input flows: balance_lte(flows1, flows2)
+
+flows1, flows2: each is a list of flow values (integers ≥ 0). Note that both flows1 and flows2 have the same length.
+
+Returns the volatility of the combined load that achieves the best load balance. Volatility is defined as the (maximum value of combined load) – (minimum value of combined load). If the length of flows1 is n, then you need to consider all options where flows1 is delayed by 1,…,(n-1) hours, all options where flows2 is delayed by 1,…,(n-1) hours, and where neither flow is delayed.
