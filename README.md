@@ -12,7 +12,16 @@ This repository contains solutions to four data science questions focused on tim
 ## Technologies  
 - Python  
 
-## How to Use  
-Clone the repository and navigate to individual question folders for code and documentation:  
-```bash  
-git clone https://github.com/MoltoRubato/FOC_Questions.git  
+### Contributors
+Ryan Huang
+University Of Melbourne COMP10001 Teaching Team (Question Provider)
+
+## How to Run
+Clone the repository and run the Python scripts for each question:
+```bash
+git clone https://github.com/MoltoRubato/FOC_Project2.git
+cd FOC_Project2
+python3 P1Q1.py
+python3 P1Q2.py
+python3 P1Q3.py
+python3 P1Q4.py
