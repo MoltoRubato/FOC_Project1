@@ -13,7 +13,7 @@ This repository contains solutions to four data science questions focused on tim
 - Python  
 
 ## Contributors
-- Ryan Huang
+- Kerui Huang
 - University of Melbourne COMP10001 Teaching Team (Question Provider)
 
 ## License
